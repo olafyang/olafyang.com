@@ -1,20 +1,22 @@
 <template>
-  <!-- Spacer -->
-  <div v-if="navbarStyle === 'simple'" style="width: 15%"></div>
-  <!-- Navbar -->
-  <nav v-if="navbarStyle === 'simple'" class="simple">
-    <div class="branding">
-      <h1>Olaf Yang</h1>
-      <h3>Photography</h3>
-      <hr />
-    </div>
-    <ul>
-      <li>New</li>
-      <li>Collections</li>
-      <li>Tags</li>
-      <li>All</li>
-    </ul>
-  </nav>
+  <div v-if="navbarStyle === 'simple'" class="spacer"></div>
+
+  <div class="nav">
+    <nav v-if="navbarStyle === 'simple'" class="simple">
+      <div class="branding">
+        <h1>Olaf Yang</h1>
+        <h3>Photography</h3>
+        <hr />
+      </div>
+      <ul>
+        <li>New</li>
+        <li>Collections</li>
+        <li>Tags</li>
+        <li>All</li>
+      </ul>
+    </nav>
+    <div class="view-spacer"></div>
+  </div>
 </template>
 
 <script>
@@ -27,18 +29,30 @@ export default {
 </script>
 
 <style>
+.nav {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+.spacer {
+  justify-content: center;
+  width: 17%;
+  margin: 0 1em;
+}
+.view-spacer {
+  width: 100%;
+}
 nav.simple {
-  width: 15%;
+  width: 17%;
   text-align: center;
   background-color: #08204a;
   color: white;
+  padding: 0 1em;
   height: 100%;
-  padding-left: 1em;
-  padding-right: 1em;
-  position: fixed;
 }
 nav.simple .branding {
-  margin: 1em 0;
+  padding-top: 1em;
 }
 nav.simple .branding h3 {
   margin: 0.3em;
