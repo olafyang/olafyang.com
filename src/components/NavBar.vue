@@ -1,4 +1,7 @@
 <template>
+  <!-- Spacer -->
+  <div v-if="navbarStyle === 'simple'" style="width: 15%"></div>
+  <!-- Navbar -->
   <nav v-if="navbarStyle === 'simple'" class="simple">
     <div class="branding">
       <h1>Olaf Yang</h1>
@@ -32,6 +35,7 @@ nav.simple {
   height: 100%;
   padding-left: 1em;
   padding-right: 1em;
+  position: fixed;
 }
 nav.simple .branding {
   margin: 1em 0;
