@@ -3,12 +3,14 @@
     <!-- <template v-slot:title="{ content }">{{ content }} - Yay!</template> -->
   </metainfo>
   <NavBar :navbarStyle="getNavbarStyle"></NavBar>
-  <router-view />
+  <div class="view-container">
+    <router-view />
+  </div>
 </template>
 
 <script>
 import sanityClient from "@sanity/client";
-import imageUrlBuilder from "@sanity/image-url"
+import imageUrlBuilder from "@sanity/image-url";
 
 import NavBar from "./components/navbar.vue";
 
@@ -20,7 +22,7 @@ export default {
       apiVersion: process.env.VUE_APP_SANITY_API_VERSION,
       useCdn: Boolean(process.env.VUE_APP_SANITY_USE_CDN),
     });
-    this.sanityImgUrlBuilder = imageUrlBuilder(this.sanityClient)
+    this.sanityImgUrlBuilder = imageUrlBuilder(this.sanityClient);
   },
   components: { NavBar },
   computed: {
@@ -66,5 +68,11 @@ h3 {
 }
 li {
   font-family: "silkathin", sans-serif;
+}
+
+.view-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 </style>

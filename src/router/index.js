@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MediaView from '../views/MediaView.vue'
+import TagView from '../views/TagView.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/view/:id',
     name: 'mediaview',
     component: MediaView
+  },
+  {
+    path: '/tags/:id',
+    name: 'itemview',
+    component: TagView
   },
   {
     path: '/about',

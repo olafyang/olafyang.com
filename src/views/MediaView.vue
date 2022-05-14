@@ -1,15 +1,13 @@
 <template>
-  <div class="viewer-container">
-    <div class="viewer">
-      <ul class="tags">
-        <li v-for="tag in tags" :key="tag">
-          {{ tag.name }}
-        </li>
-      </ul>
-      <img :src="imageUrl" :alt="title" />
-      <h4>{{ objectID }}</h4>
-      <h1>{{ title }}</h1>
-    </div>
+  <div class="viewer">
+    <ul class="tags">
+      <li v-for="tag in tags" :key="tag">
+        {{ tag.name }}
+      </li>
+    </ul>
+    <img :src="imageUrl" :alt="title" />
+    <h4>{{ objectID }}</h4>
+    <h1>{{ title }}</h1>
   </div>
 </template>
 
@@ -60,7 +58,9 @@ export default {
       title: title,
       "twitter:card": "summary",
       "twitter:title": title,
-      "twitter:description": `View "${this.title ? this.title : this.objectID}" on olafyang.com`,
+      "twitter:description": `View "${
+        this.title ? this.title : this.objectID
+      }" on olafyang.com`,
       "twitter:image": `${this.smallUrl}`,
       "og:title": title,
       "og:image": `${this.smallUrl}`,
@@ -74,11 +74,6 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
 
-.viewer-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
 .viewer {
   max-width: 80%;
   text-align: center;
