@@ -1,12 +1,25 @@
 <template>
+  <metainfo>
+    <!-- <template v-slot:title="{ content }">{{ content }} - Yay!</template> -->
+  </metainfo>
   <NavBar :navbarStyle="getNavbarStyle"></NavBar>
   <router-view />
 </template>
 
 <script>
-import NavBar from "./components/NavBar.vue";
+import sanityClient from "@sanity/client";
+
+import NavBar from "./components/navbar.vue";
 
 export default {
+  beforeCreate() {
+    this.sanityClient = sanityClient({
+      projectId: process.env.VUE_APP_SANITY_PROJECT_ID,
+      dataset: process.env.VUE_APP_SANITY_DATASET,
+      apiVersion: process.env.VUE_APP_SANITY_API_VERSION,
+      useCdn: Boolean(process.env.VUE_APP_SANITY_USE_CDN),
+    });
+  },
   components: { NavBar },
   computed: {
     getNavbarStyle() {
@@ -23,24 +36,33 @@ export default {
 </script>
 
 <style>
+@import url("@/reset.css");
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
-nav {
-  padding: 30px;
+h1 {
+  font-size: 2.5em;
+  font-family: "silkabold", sans-serif;
 }
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+h2 {
+  font-size: 1.5em;
+  font-family: "silkasemibold", sans-serif;
 }
-
-nav a.router-link-exact-active {
-  color: #42b983;
+h3 {
+  font-size: 1em;
+  font-family: "silkamedium", sans-serif;
+}
+li {
+  font-family: "silkathin", sans-serif;
 }
 </style>
