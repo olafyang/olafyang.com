@@ -15,14 +15,10 @@
 
 <script>
 export default {
-  metaInfo() {
-      return {
-          title: `Olaf Yang | ${this.handle}`
-      }
-  },
   data() {
     return {
       imageUrl: null,
+      smallUrl: null,
       title: null,
       objectID: null,
       tags: null,
@@ -42,6 +38,10 @@ export default {
       )
       .then((res) => {
         this.imageUrl = res.imageUrl;
+        this.smallUrl = this.$root.sanityImgUrlBuilder
+          .image(res.imageUrl)
+          .width(1000)
+          .url();
         this.title = res.title;
         this.objectID = res.objectID;
         this.handle = `${res.hdlPrefix}/${res.objectID}`;
@@ -52,6 +52,19 @@ export default {
           };
         });
       });
+  },
+  metaInfo() {
+    const title = `Olaf Yang | ${this.title ? this.title : this.objectID}`;
+    return {
+      title: title,
+      "twitter:card": "summary",
+      "twitter:title": title,
+      "twitter:description": `View ${this.objectID} on olafyang.com`,
+      "twitter:image": `${this.smallUrl}`,
+      "og:title": title,
+      "og:image": `${this.smallUrl}`,
+      "og:url": `https://hdl.handle.net/${this.handle}`,
+    };
   },
   name: "MediaView",
 };
