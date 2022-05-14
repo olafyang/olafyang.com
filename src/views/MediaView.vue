@@ -31,6 +31,7 @@ export default {
         `*[_type == "photo" && objectID == "${this.$route.params.id}"][0]
         {
             objectID,
+            title,
             hdlPrefix,
             "imageUrl": photo.asset->url,
             "tags": *[_type == "tag" && name in ^.tags[]._ref]{name, tagName}
@@ -59,7 +60,7 @@ export default {
       title: title,
       "twitter:card": "summary",
       "twitter:title": title,
-      "twitter:description": `View ${this.objectID} on olafyang.com`,
+      "twitter:description": `View "${this.title ? this.title : this.objectID}" on olafyang.com`,
       "twitter:image": `${this.smallUrl}`,
       "og:title": title,
       "og:image": `${this.smallUrl}`,
