@@ -1,12 +1,28 @@
 <template>
   <div class="item-viewer">
     <h1>{{ tagName }}</h1>
+    <p>{{ description }}</p>
     <ItemsView :items="items"></ItemsView>
   </div>
 </template>
 
 <script>
 import ItemsView from "@/components/ItemsView.vue";
+
+function getItemsWithLayout(items, options) {
+  let layout = require("justified-layout")(
+    items.map((item) => item.aspectRatio),
+    options
+  );
+  let itemsWithLayout = [];
+  for (let i = 0; i < items.length; i++) {
+    itemsWithLayout.push({
+      ...items[i],
+      layout: layout.boxes[i],
+    });
+  }
+  return itemsWithLayout;
+}
 
 export default {
   components: {
@@ -16,6 +32,7 @@ export default {
     return {
       tagName: null,
       tagID: null,
+      description: null,
       items: null,
     };
   },
@@ -26,43 +43,50 @@ export default {
     {
     tagName,
     name,
-    "photos": *[_type == "photo" && references(^.name)]{objectID, "url": photo.asset->url}
+    description,
+    "photos": *[_type == "photo" && references(^.name)]{objectID, "url": photo.asset->url, "dimensions": photo.asset->metadata.dimensions}
     }`
       )
       .then((res) => {
         this.tagName = res.tagName;
         this.tagID = res.name.replace("tag_", "");
-        this.items = res.photos.map((item) => {
+        this.description = res.description;
+        let items = res.photos.map((item) => {
           return {
+            aspectRatio: item.dimensions.aspectRatio,
             id: item.objectID,
             url: this.$root.sanityImgUrlBuilder.image(item.url).size(500).url(),
           };
         });
+        this.items = getItemsWithLayout(items);
       });
+  },
+
+  beforeUpdate() {
+    const itemViewRect = document
+      .querySelector("div.item-viewer")
+      .getBoundingClientRect();
+    const options = {
+      targetRowHeight: 200,
+      containerWidth: itemViewRect.width,
+      containerPadding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      },
+    };
+    this.items = getItemsWithLayout(this.items, options);
   },
 };
 </script>
 
 <style>
 .item-viewer {
-  max-width: 80%;
+  width: 90%;
+  margin-top: 1em;
 }
-.items {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-  grid-auto-flow: dense;
-  grid-gap: 0.3rem;
-
-  /* flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  flex: 25%;
-  margin: 0 1%; */
-}
-.items img {
-  max-width: 200px;
-  margin-bottom: 1%;
-  border-radius: 30px;
+.item-viewer p {
+  margin: 1.5em 0;
 }
 </style>

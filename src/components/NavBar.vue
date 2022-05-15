@@ -1,5 +1,5 @@
 <template>
-  <div v-if="navbarStyle === 'simple'" class="spacer"></div>
+  <!-- <div v-if="navbarStyle === 'simple'" class="spacer"></div> -->
 
   <div class="nav">
     <nav v-if="navbarStyle === 'simple'" class="simple">
@@ -15,7 +15,6 @@
         <li>All</li>
       </ul>
     </nav>
-    <div class="view-spacer"></div>
   </div>
 </template>
 
@@ -31,20 +30,21 @@ export default {
 <style>
 .nav {
   position: fixed;
-  height: 100%;
-  width: 100%;
+  width: 17%;
   display: flex;
+  height: 100%;
 }
 .spacer {
   justify-content: center;
   width: 17%;
-  margin: 0 1em;
+  margin-right: 3em;
 }
 .view-spacer {
   width: 100%;
+  position: fixed;
 }
 nav.simple {
-  width: 17%;
+  width: 100%;
   text-align: center;
   background-color: #08204a;
   color: white;
@@ -60,7 +60,7 @@ nav.simple .branding h3 {
 nav.simple hr {
   border-radius: 5px;
   border: 2px white solid;
-  margin: 0.5em 0.1em;
+  margin: 0.5em 0;
   padding: 0, 1em;
 }
 nav.simple ul {

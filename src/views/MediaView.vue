@@ -2,7 +2,9 @@
   <div class="viewer">
     <ul class="tags">
       <li v-for="tag in tags" :key="tag">
-        {{ tag.name }}
+        <router-link :to="`/tags/${tag.id}`">
+          {{ tag.name }}
+        </router-link>
       </li>
     </ul>
     <img :src="imageUrl" :alt="title" />
@@ -36,10 +38,13 @@ export default {
         }`
       )
       .then((res) => {
-        this.imageUrl = res.imageUrl;
+        this.imageUrl = this.$root.sanityImgUrlBuilder
+          .image(res.imageUrl)
+          .width(2000)
+          .url();
         this.smallUrl = this.$root.sanityImgUrlBuilder
           .image(res.imageUrl)
-          .width(1000)
+          .width(500)
           .url();
         this.title = res.title;
         this.objectID = res.objectID;
@@ -80,6 +85,7 @@ export default {
 }
 .viewer img {
   max-width: 100%;
+  max-height: 80%;
   border-radius: 50px;
 }
 .viewer h4 {
@@ -92,6 +98,11 @@ export default {
   display: flex;
   margin: 1em auto;
 }
+.tags a {
+  color: white;
+  text-decoration: none;
+}
+
 .tags li {
   font-family: "silkaregular", Tahoma, sans-serif;
   background-color: #505e77;

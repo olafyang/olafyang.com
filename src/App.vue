@@ -69,8 +69,12 @@ h3 {
 li {
   font-family: "silkathin", sans-serif;
 }
+p {
+  font-family: "silkaregular", sans-serif;
+}
 
 .view-container {
+  margin-left: 17%;
   width: 100%;
   display: flex;
   justify-content: center;
