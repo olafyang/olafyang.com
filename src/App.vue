@@ -1,7 +1,5 @@
 <template>
-  <metainfo>
-    <!-- <template v-slot:title="{ content }">{{ content }} - Yay!</template> -->
-  </metainfo>
+  <metainfo> </metainfo>
   <NavBar :navbarStyle="getNavbarStyle"></NavBar>
   <div v-if="getNavbarStyle === 'simple'" class="view-container">
     <router-view />
@@ -44,6 +42,8 @@ export default {
         case "home":
           return "none";
         case "about":
+          return "none";
+        case "error":
           return "none";
         default:
           return "simple";
@@ -125,5 +125,24 @@ img.back-icon {
 
 a {
   text-decoration: none;
+}
+
+.fullpage-color-main {
+  height: 100%;
+  width: 100%;
+  background-color: #08204a;
+}
+.branding-simple {
+  padding: 2em 0 1em 7em;
+  display: flex;
+}
+.branding-simple h1,
+h3,
+hr {
+  color: white;
+}
+.branding-simple hr {
+  border-radius: 3px;
+  border: 2px white solid;
 }
 </style>

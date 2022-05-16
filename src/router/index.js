@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import MediaView from '../views/MediaView.vue'
 import TagView from '../views/TagView.vue'
 import TagListView from '../views/TagsListView.vue'
+import ErrorView from '../views/ErrorView.vue'
 
 const routes = [
   {
@@ -32,6 +33,12 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/error/:code',
+    alias: '/error',
+    name: 'error',
+    component: ErrorView
   }
 ]
 

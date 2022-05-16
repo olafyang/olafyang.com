@@ -45,12 +45,6 @@ export default {};
 </script>
 
 <style scoped>
-.fullpage-color-main {
-  height: 100%;
-  width: 100%;
-  background-color: #08204a;
-}
-
 .about {
   display: flex;
   justify-content: space-between;
@@ -72,20 +66,6 @@ export default {};
 }
 .about-text a {
   text-decoration: none;
-}
-
-.branding-simple {
-  padding: 2em 0 1em 7em;
-  display: flex;
-}
-.branding-simple h1,
-h3,
-hr {
-  color: white;
-}
-.branding-simple hr {
-  border-radius: 3px;
-  border: 2px white solid;
 }
 
 .about-photo img {
