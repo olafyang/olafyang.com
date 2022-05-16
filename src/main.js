@@ -40,24 +40,40 @@ const manager = createMetaManager(
         keyAttribute: "name",
         valueAttribute: "content",
       },
-      "og:title": {
+      "twitter:domain": {
         tag: "meta",
-        keyAttribute: "name",
+        keyAttribute: "property",
         valueAttribute: "content",
       },
-      "og:type": {
+      "twitter:url": {
         tag: "meta",
-        keyAttribute: "name",
-        valueAttribute: "content",
-      },
-      "og:image": {
-        tag: "meta",
-        keyAttribute: "name",
+        keyAttribute: "property",
         valueAttribute: "content",
       },
       "og:url": {
         tag: "meta",
-        keyAttribute: "name",
+        keyAttribute: "property",
+        valueAttribute: "content",
+      },
+      "og:type": {
+        tag: "meta",
+        keyAttribute: "property",
+        valueAttribute: "content",
+      },
+      "og:description": {
+        tag: "meta",
+        keyAttribute: "property",
+        valueAttribute: "content",
+      },
+      "og:title": {
+        tag: "meta",
+        keyAttribute: "property",
+        valueAttribute: "content",
+      },
+
+      "og:image": {
+        tag: "meta",
+        keyAttribute: "property",
         valueAttribute: "content",
       },
     },

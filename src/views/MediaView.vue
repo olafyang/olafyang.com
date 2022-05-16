@@ -45,8 +45,8 @@ export default {
       )
       .then((res) => {
         if (res === null) {
-          this.$router.replace("/error/404")
-          return
+          this.$router.replace("/error/404");
+          return;
         }
         this.imageUrl = this.$root.sanityImgUrlBuilder
           .image(res.imageUrl)
@@ -72,14 +72,21 @@ export default {
     return {
       title: title,
       "twitter:card": "summary",
+      "twitter:domain": "https://olafyang.com",
+      "twitter:url": `https://olafyang.com${this.$route.path}`,
       "twitter:title": title,
       "twitter:description": `View "${
         this.title ? this.title : this.objectID
       }" on olafyang.com`,
       "twitter:image": `${this.smallUrl}`,
+
+      "og:url": `https://olafyang.com${this.$route.path}`,
+      "og:type": "website",
       "og:title": title,
+      "og:description": `View "${
+        this.title ? this.title : this.objectID
+      }" on olafyang.com`,
       "og:image": `${this.smallUrl}`,
-      "og:url": `https://hdl.handle.net/${this.handle}`,
     };
   },
   name: "MediaView",
