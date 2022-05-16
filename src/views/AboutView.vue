@@ -85,5 +85,6 @@ export default {};
 .about-photo img {
   margin-top: 2em;
   border-radius: 30px;
+  margin-right: 7em;
 }
 </style>
