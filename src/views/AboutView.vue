@@ -7,12 +7,12 @@
         @click="this.$root.previousPage"
         alt="Back"
       />
-      <router-link to="/" class="branding-simple">
-        <div>
+      <div class="branding-simple">
+        <router-link to="/">
           <h1>Olaf Yang</h1>
           <hr />
-        </div>
-      </router-link>
+        </router-link>
+      </div>
     </div>
     <div class="about">
       <div class="about-content">
