@@ -1,6 +1,14 @@
 <template>
   <div class="item-viewer">
-    <h1>{{ tagName }}</h1>
+    <div class="sub-nav">
+      <img
+        class="back-icon"
+        src="/static/arrow_back.svg"
+        @click="this.$root.previousPage"
+        alt="Back"
+      />
+      <h1>{{ tagName }}</h1>
+    </div>
     <p>{{ description }}</p>
     <ItemsView :items="items"></ItemsView>
   </div>
@@ -81,12 +89,4 @@ export default {
 };
 </script>
 
-<style>
-.item-viewer {
-  width: 90%;
-  margin-top: 1em;
-}
-.item-viewer p {
-  margin: 1.5em 0;
-}
-</style>
+<style></style>

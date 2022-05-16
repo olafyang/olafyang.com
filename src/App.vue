@@ -15,6 +15,15 @@ import imageUrlBuilder from "@sanity/image-url";
 import NavBar from "./components/navbar.vue";
 
 export default {
+  methods: {
+    previousPage() {
+      if (window.history.state.back != null) {
+      this.$router.go(-1);
+      } else {
+        this.$router.push("/")
+      }
+    },
+  },
   beforeCreate() {
     this.sanityClient = sanityClient({
       projectId: process.env.VUE_APP_SANITY_PROJECT_ID,
@@ -61,22 +70,49 @@ h1 {
 h2 {
   font-size: 1.5em;
   font-family: "silkasemibold", sans-serif;
+  color: #08204a;
 }
 h3 {
   font-size: 1em;
   font-family: "silkamedium", sans-serif;
+  color: #08204a;
 }
 li {
   font-family: "silkathin", sans-serif;
 }
 p {
   font-family: "silkaregular", sans-serif;
+  color: #08204a;
 }
 
 .view-container {
+  margin-top: 1em;
   margin-left: 17%;
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.item-viewer {
+  width: 90%;
+}
+.item-viewer h1 {
+  color: #08204a;
+}
+.item-viewer p {
+  margin: 1.5em 0;
+}
+
+.sub-nav {
+  display: flex;
+  align-items: center;
+  color: #08204a;
+}
+
+img.back-icon {
+  height: 2.5em;
+  width: 2.5em;
+  margin-right: 1em;
+  cursor: pointer;
 }
 </style>

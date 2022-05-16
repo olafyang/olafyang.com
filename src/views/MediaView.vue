@@ -1,6 +1,12 @@
 <template>
   <div class="viewer">
     <ul class="tags">
+      <img
+        class="back-icon"
+        src="/static/arrow_back.svg"
+        @click="this.$root.previousPage"
+        alt="Back"
+      />
       <li v-for="tag in tags" :key="tag">
         <router-link :to="`/tags/${tag.id}`">
           {{ tag.name }}
@@ -91,12 +97,10 @@ export default {
 .viewer h4 {
   font-family: "Roboto Mono", monospace;
 }
-.viewer h1 {
-  margin-top: 0.2em;
-}
 .tags {
   display: flex;
-  margin: 1em auto;
+  margin-bottom: 1em;
+  align-items: center;
 }
 .tags a {
   color: white;
