@@ -3,7 +3,10 @@
     <!-- <template v-slot:title="{ content }">{{ content }} - Yay!</template> -->
   </metainfo>
   <NavBar :navbarStyle="getNavbarStyle"></NavBar>
-  <div class="view-container">
+  <div v-if="getNavbarStyle === 'simple'" class="view-container">
+    <router-view />
+  </div>
+  <div class="fullpage-view" v-else>
     <router-view />
   </div>
 </template>
@@ -18,9 +21,9 @@ export default {
   methods: {
     previousPage() {
       if (window.history.state.back != null) {
-      this.$router.go(-1);
+        this.$router.go(-1);
       } else {
-        this.$router.push("/")
+        this.$router.push("/");
       }
     },
   },
@@ -39,7 +42,9 @@ export default {
       const route = this.$route.name;
       switch (route) {
         case "home":
-          return "gallery";
+          return "none";
+        case "about":
+          return "none";
         default:
           return "simple";
       }
@@ -111,5 +116,14 @@ img.back-icon {
   width: 2.5em;
   margin-right: 1em;
   cursor: pointer;
+}
+
+.fullpage-view {
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
 }
 </style>

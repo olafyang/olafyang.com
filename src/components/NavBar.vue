@@ -1,7 +1,7 @@
 <template>
   <!-- <div v-if="navbarStyle === 'simple'" class="spacer"></div> -->
 
-  <div class="nav">
+  <div v-if="navbarStyle != 'none'" class="nav">
     <nav v-if="navbarStyle === 'simple'" class="simple">
       <div class="branding">
         <h1>Olaf Yang</h1>
