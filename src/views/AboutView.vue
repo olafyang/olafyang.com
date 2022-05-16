@@ -83,6 +83,7 @@ export default {};
 }
 
 .about-photo img {
+  width: 80%;
   margin-top: 2em;
   border-radius: 30px;
   margin-right: 7em;

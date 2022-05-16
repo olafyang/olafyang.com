@@ -68,9 +68,17 @@ body {
   width: 100%;
 }
 
-h1 {
-  font-size: 2.5em;
-  font-family: "silkabold", sans-serif;
+@media only screen and (min-width: 1360px) {
+  h1 {
+    font-size: 2.5em;
+    font-family: "silkabold", sans-serif;
+  }
+}
+@media only screen and (max-width: 1360px) {
+  h1 {
+    font-size: 2em;
+    font-family: "silkabold", sans-serif;
+  }
 }
 h2 {
   font-size: 1.5em;
