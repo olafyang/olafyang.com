@@ -44,6 +44,10 @@ export default {
         }`
       )
       .then((res) => {
+        if (res === null) {
+          this.$router.replace("/error/404")
+          return
+        }
         this.imageUrl = this.$root.sanityImgUrlBuilder
           .image(res.imageUrl)
           .width(2000)

@@ -62,6 +62,10 @@ export default {
     }`
       )
       .then((res) => {
+        if (res === null) {
+          this.$router.replace("/error/404");
+          return;
+        }
         let tagsWithDescription = [];
         let tagsWithoutDescription = [];
         res.map((item) => {
@@ -135,7 +139,6 @@ export default {
             tagSections.push(section);
           }
         }
-
 
         // add all remaining elements in tagsWithDescription to the end of the list
         if (tagsWithDescription) {

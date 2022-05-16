@@ -56,6 +56,10 @@ export default {
     }`
       )
       .then((res) => {
+        if (res === null) {
+          this.$router.replace("/error/404");
+          return;
+        }
         this.tagName = res.tagName;
         this.tagID = res.name.replace("tag_", "");
         this.description = res.description;

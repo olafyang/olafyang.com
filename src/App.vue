@@ -137,8 +137,8 @@ a {
   display: flex;
 }
 .branding-simple h1,
-h3,
-hr {
+.branding h3,
+.branding hr {
   color: white;
 }
 .branding-simple hr {
