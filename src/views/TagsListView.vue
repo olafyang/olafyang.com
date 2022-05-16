@@ -136,6 +136,13 @@ export default {
           }
         }
 
+
+        // add all remaining elements in tagsWithDescription to the end of the list
+        if (tagsWithDescription) {
+          tagSections = tagSections.concat(tagsWithDescription);
+          console.log(tagsWithDescription)
+        }
+
         this.sections = tagSections;
       });
   },
