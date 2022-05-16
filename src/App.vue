@@ -70,19 +70,16 @@ h1 {
 h2 {
   font-size: 1.5em;
   font-family: "silkasemibold", sans-serif;
-  color: #08204a;
 }
 h3 {
   font-size: 1em;
   font-family: "silkamedium", sans-serif;
-  color: #08204a;
 }
 li {
   font-family: "silkathin", sans-serif;
 }
 p {
   font-family: "silkaregular", sans-serif;
-  color: #08204a;
 }
 
 .view-container {
