@@ -1,11 +1,19 @@
 <template>
   <div class="fullpage-color-main">
-    <router-link to="/" class="branding-simple">
-      <div>
-        <h1>Olaf Yang</h1>
-        <hr />
-      </div>
-    </router-link>
+    <div class="about-nav">
+      <img
+        class="back-icon"
+        src="/static/arrow_back_white.svg"
+        @click="this.$root.previousPage"
+        alt="Back"
+      />
+      <router-link to="/" class="branding-simple">
+        <div>
+          <h1>Olaf Yang</h1>
+          <hr />
+        </div>
+      </router-link>
+    </div>
     <div class="about">
       <div class="about-content">
         <div class="about-text">
@@ -48,7 +56,13 @@ export default {};
 .about {
   display: flex;
   justify-content: space-between;
-  margin: 0 7em;
+  margin-left: 7em;
+}
+
+.about-nav {
+  margin-left: 7em;
+  display: flex;
+  align-items: center;
 }
 
 .about-text {

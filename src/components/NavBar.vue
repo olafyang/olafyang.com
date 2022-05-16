@@ -4,15 +4,14 @@
   <div v-if="navbarStyle != 'none'" class="nav">
     <nav v-if="navbarStyle === 'simple'" class="simple">
       <div class="branding">
-        <h1>Olaf Yang</h1>
-        <h3>Photography</h3>
+        <router-link to="/"><h1>Olaf Yang</h1></router-link>
+        <router-link to="/"><h3>Photography</h3></router-link>
         <hr />
       </div>
       <ul>
-        <li>New</li>
-        <li>Collections</li>
-        <li>Tags</li>
-        <li>All</li>
+        <li><router-link to="/explore">Explore</router-link></li>
+        <li><router-link to="/tags">Collections</router-link></li>
+        <li><router-link to="/about">About</router-link></li>
       </ul>
     </nav>
   </div>
@@ -68,6 +67,12 @@ nav.simple ul {
 }
 nav.simple li {
   font-size: 1.5em;
-  margin: 0.5em 0;
+  margin: 0.75em 0;
+}
+li a {
+  color: white;
+}
+.branding a {
+  color: white;
 }
 </style>

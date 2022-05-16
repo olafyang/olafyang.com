@@ -173,9 +173,6 @@ export default {
   justify-content: space-between;
   margin-bottom: 1em;
 }
-.tags-list {
-  margin-top: 1em;
-}
 .tags-row.tag-with-description {
   justify-content: start;
   align-items: center;

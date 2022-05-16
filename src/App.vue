@@ -81,7 +81,8 @@ h3 {
   font-family: "silkamedium", sans-serif;
 }
 li {
-  font-family: "silkathin", sans-serif;
+  font-family: "silkalight", sans-serif;
+  font-weight: 200;
 }
 p {
   font-family: "silkaregular", sans-serif;
@@ -133,7 +134,7 @@ a {
   background-color: #08204a;
 }
 .branding-simple {
-  padding: 2em 0 1em 7em;
+  padding: 2em 0 1em 2em;
   display: flex;
 }
 .branding-simple h1,
@@ -144,5 +145,9 @@ a {
 .branding-simple hr {
   border-radius: 3px;
   border: 2px white solid;
+}
+
+.sub-nav {
+  margin-bottom: 1em;
 }
 </style>

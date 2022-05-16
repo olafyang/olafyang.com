@@ -7,21 +7,17 @@
         @click="this.$root.previousPage"
         alt="Back"
       />
-      <h1>{{ tagName }}</h1>
+      <h1>Explore</h1>
     </div>
-    <p v-if="description">{{ description }}</p>
     <ItemsView :items="items"></ItemsView>
   </div>
 </template>
 
 <script>
-import ItemsView from "@/components/ItemsView.vue";
 import { getItemsWithLayout } from "@/layout";
+import ItemsView from "../components/ItemsView.vue";
 
 export default {
-  components: {
-    ItemsView,
-  },
   data() {
     return {
       tagName: null,
@@ -33,12 +29,11 @@ export default {
   created() {
     this.$root.sanityClient
       .fetch(
-        `*[_type == "tag" && name == "tag_${this.$route.params.id}"][0]
+        `*[_type == "photo"][0...200]
     {
-    tagName,
-    name,
-    description,
-    "photos": *[_type == "photo" && references(^.name)]{objectID, "url": photo.asset->url, "dimensions": photo.asset->metadata.dimensions}
+    objectID,
+    "url": photo.asset->url,
+    "aspectRatio": photo.asset->metadata.dimensions.aspectRatio
     }`
       )
       .then((res) => {
@@ -46,20 +41,16 @@ export default {
           this.$router.replace("/error/404");
           return;
         }
-        this.tagName = res.tagName;
-        this.tagID = res.name.replace("tag_", "");
-        this.description = res.description;
-        let items = res.photos.map((item) => {
+        let items = res.map((item) => {
           return {
-            aspectRatio: item.dimensions.aspectRatio,
             id: item.objectID,
             url: this.$root.sanityImgUrlBuilder.image(item.url).size(500).url(),
+            aspectRatio: item.aspectRatio,
           };
         });
         this.items = getItemsWithLayout(items);
       });
   },
-
   beforeUpdate() {
     const itemViewRect = document
       .querySelector("div.item-viewer")
@@ -75,6 +66,9 @@ export default {
       },
     };
     this.items = getItemsWithLayout(this.items, options);
+  },
+  components: {
+    ItemsView,
   },
 };
 </script>

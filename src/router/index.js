@@ -4,6 +4,7 @@ import MediaView from "../views/MediaView.vue";
 import TagView from "../views/TagView.vue";
 import TagListView from "../views/TagsListView.vue";
 import ErrorView from "../views/ErrorView.vue";
+import ExploreView from "../views/ExploreView.vue";
 
 const routes = [
   {
@@ -34,6 +35,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/explore",
+    name: "explore",
+    component: ExploreView,
   },
   {
     path: "/error/:code",
