@@ -96,6 +96,7 @@ export default {
 }
 .viewer h4 {
   font-family: "Roboto Mono", monospace;
+  color: #08204a;
 }
 .tags {
   display: flex;
