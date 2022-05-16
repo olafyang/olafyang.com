@@ -38,6 +38,9 @@
 </template>
 
 <script>
+// TODO watch window size change and recalculate tags per section
+// TODO change display style for the last row so spacing remains consistant
+
 export default {
   data() {
     return {
@@ -92,7 +95,8 @@ export default {
 
         // Calculate number of tags per row
         const tagsPerRow = Math.floor(
-          document.querySelector("div.item-viewer").offsetWidth / tagWidth
+          document.querySelector("div.item-viewer").offsetWidth /
+            (tagWidth + 20)
         );
 
         let i = 0;
@@ -103,16 +107,27 @@ export default {
           tagSections.push(tagsWithDescription.pop());
         }
 
+        let tagsRowCount = 0;
         for (let n = 0; n < tagsWithoutDescription.length; n++) {
           const tag = tagsWithoutDescription[n];
+
+          // build section
           if (i === tagsPerRow) {
             tagSections.push(section);
-            if (tagsWithDescription.length != 0 && n % 4 == 0) {
+
+            // ensures tag with description appears only every two rows
+            if (tagsWithDescription.length != 0 && tagsRowCount === 1) {
               tagSections.push(tagsWithDescription.pop());
+              tagsRowCount = 0;
+            } else {
+              tagsRowCount++;
             }
+
+            // reset section
             section = [];
             i = 0;
           }
+
           section.push(tag);
           i++;
 
