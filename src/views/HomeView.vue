@@ -63,6 +63,20 @@ export default {
         );
       });
   },
+  metaInfo() {
+    const title = "Olaf Yang | Photography";
+    return {
+      title: title,
+      "twitter:card": "summary",
+      "twitter:domain": "https://olafyang.com",
+      "twitter:url": `https://olafyang.com`,
+      "twitter:title": title,
+
+      "og:url": `https://olafyang.com`,
+      "og:type": "website",
+      "og:title": title,
+    };
+  },
 };
 </script>
 
