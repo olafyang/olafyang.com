@@ -1,5 +1,6 @@
 <template>
   <metainfo> </metainfo>
+  <h5 v-if="mode" class="mode-indicator">{{ mode }}</h5>
   <NavBar :navbarStyle="getNavbarStyle"></NavBar>
   <div v-if="getNavbarStyle === 'simple'" class="view-container">
     <router-view />
@@ -16,6 +17,11 @@ import imageUrlBuilder from "@sanity/image-url";
 import NavBar from "./components/navbar.vue";
 
 export default {
+  data() {
+    return {
+      mode: process.env.NODE_ENV === "development" ? "Development" : null,
+    };
+  },
   methods: {
     previousPage() {
       if (window.history.state.back != null) {
@@ -157,5 +163,15 @@ a {
 
 .sub-nav {
   margin-bottom: 1em;
+}
+
+.mode-indicator {
+  position: absolute;
+  background-color: white;
+  color: red;
+  font-family: "siklaregular", sans-serif;
+  padding: 0.2em 1em;
+  text-align: center;
+  z-index: 1000;
 }
 </style>
