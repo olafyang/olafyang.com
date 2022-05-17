@@ -22,11 +22,8 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - name: Initialize node modules
-        run: npm init -y
-
-      - name: Install Vue CLI
-        run: npm install -y @vue/cli
+      - name: Install Dependencies
+        run: npm install -y
 
       - name: Build Site
         run: npm run build-dev
