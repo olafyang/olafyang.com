@@ -12,7 +12,7 @@
         <h2>Photography</h2>
         <hr />
         <div class="home-nav">
-          <router-link to="/tags">Explore</router-link>
+          <router-link to="/explore">Explore</router-link>
           <router-link to="/tags">Collections</router-link>
           <router-link to="/about">About</router-link>
         </div>
