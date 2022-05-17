@@ -7,6 +7,9 @@ import ErrorView from "../views/ErrorView.vue";
 import ExploreView from "../views/ExploreView.vue";
 
 const routes = [
+  // {
+  //   path: "/ph",
+  // },
   {
     path: "/",
     name: "home",
