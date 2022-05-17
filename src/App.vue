@@ -36,7 +36,7 @@ export default {
       projectId: process.env.VUE_APP_SANITY_PROJECT_ID,
       dataset: process.env.VUE_APP_SANITY_DATASET,
       apiVersion: process.env.VUE_APP_SANITY_API_VERSION,
-      useCdn: Boolean(process.env.VUE_APP_SANITY_USE_CDN),
+      useCdn: process.env.VUE_APP_SANITY_USE_CDN === "true",
     });
     this.sanityImgUrlBuilder = imageUrlBuilder(this.sanityClient);
   },
