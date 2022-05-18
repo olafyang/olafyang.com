@@ -33,12 +33,12 @@ export default {
   created() {
     this.$root.sanityClient
       .fetch(
-        `*[_type == "tag" && name == "tag_${this.$route.params.id}"][0]
+        `*[_type == "tag" && tagID == "${this.$route.params.id}"][0]
     {
-    tagName,
+    tagID,
     name,
     description,
-    "photos": *[_type == "photo" && references(^.name)]{objectID, "url": photo.asset->url, "dimensions": photo.asset->metadata.dimensions}
+    "photos": *[_type == "photo" && references(^._id)]{objectID, "url": photo.asset->url, "dimensions": photo.asset->metadata.dimensions}
     }`
       )
       .then((res) => {
@@ -46,8 +46,8 @@ export default {
           this.$router.replace("/error/404");
           return;
         }
-        this.tagName = res.tagName;
-        this.tagID = res.name.replace("tag_", "");
+        this.tagName = res.name;
+        this.tagID = res.tagID;
         this.description = res.description;
         let items = res.photos.map((item) => {
           return {

@@ -40,7 +40,7 @@ export default {
             title,
             hdlPrefix,
             "imageUrl": photo.asset->url,
-            "tags": *[_type == "tag" && name in ^.tags[]._ref]{name, tagName}
+            "tags": *[_type == "tag" && _id in ^.tags[]._ref]{name, tagID}
         }`
       )
       .then((res) => {
@@ -61,8 +61,8 @@ export default {
         this.handle = `${res.hdlPrefix}/${res.objectID}`;
         this.tags = res.tags.map((tag) => {
           return {
-            name: tag.tagName,
-            id: tag.name.replace("tag_", ""),
+            name: tag.name,
+            id: tag.tagID,
           };
         });
       });

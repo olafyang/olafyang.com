@@ -55,13 +55,14 @@ export default {
         `
     *[_type == "tag"]
     {
-    tagName,
+    tagID,
     name,
     description,
-    "photo": *[_type == "photo" && references(^.name)][0]{objectID, "url": photo.asset->url}
+    "photo": *[_type == "photo" && references(^._id)][0]{objectID, "url": photo.asset->url}
     }`
       )
       .then((res) => {
+        console.log(res)
         if (res === null) {
           this.$router.replace("/error/404");
           return;
@@ -82,16 +83,16 @@ export default {
 
           if (item.description) {
             tagsWithDescription.push({
-              id: item.name.replace("tag_", ""),
-              name: item.tagName,
+              id: item.tagID,
+              name: item.name,
               description: item.description,
               photoUrl: url,
             });
           } else {
             tagsWithoutDescription.push({
-              id: item.name.replace("tag_", ""),
-              name: item.tagName,
-              description: "123",
+              id: item.tagID,
+              name: item.name,
+              description: "",
               photoUrl: url,
             });
           }
