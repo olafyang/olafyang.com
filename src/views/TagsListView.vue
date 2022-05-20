@@ -11,8 +11,8 @@
     </div>
 
     <!-- Tag rendering -->
-    <div class="tags-list" v-for="section in sections" :key="section">
-      <div class="tags-row" v-if="Array.isArray(section)">
+    <div v-for="section in sections" :key="section">
+      <div class="tags-row no-description" v-if="Array.isArray(section)">
         <div class="tag-item" v-for="tag in section" :key="tag">
           <router-link :to="`/tags/${tag.id}`">
             <img class="tag-item" :src="tag.photoUrl" />
@@ -20,6 +20,7 @@
           </router-link>
         </div>
       </div>
+
       <div class="tags-row tag-with-description" v-else>
         <router-link :to="`/tags/${section.id}`">
           <img :src="section.photoUrl" />
@@ -48,7 +49,7 @@ export default {
     };
   },
   created() {
-    const tagWidth = 200;
+    const tagWidth = window.innerWidth < 1360 ? 160 : 200;
 
     this.$root.sanityClient
       .fetch(
@@ -62,7 +63,6 @@ export default {
     }`
       )
       .then((res) => {
-        console.log(res)
         if (res === null) {
           this.$router.replace("/error/404");
           return;
@@ -99,6 +99,7 @@ export default {
         });
 
         // Calculate number of tags per row
+        // const tagsPerRow = 5;
         const tagsPerRow = Math.floor(
           document.querySelector("div.item-viewer").offsetWidth /
             (tagWidth + 20)
@@ -153,49 +154,83 @@ export default {
 </script>
 
 <style>
-.tag-item {
-  text-align: center;
-  font-family: "silkamedium", sans-serif;
-  font-size: 1.3em;
-  width: 200px;
-}
 .tag-item a {
   text-decoration: none;
   color: #08204a;
   cursor: pointer;
 }
-.tag-item img {
-  height: 200px;
-  border-radius: 30px;
-  cursor: pointer;
+
+@media only screen and (max-width: 1360px) {
+  .tags-row {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .tag-item {
+    text-align: center;
+    font-family: "silkamedium", sans-serif;
+    font-size: 1.3em;
+    width: 180px;
+  }
+  .tag-item img {
+    border-radius: 30px;
+  }
+  .tags-row.no-description {
+    display: flex;
+    justify-content: space-between;
+  }
+  .tags-row.tag-with-description img {
+    width: 100%;
+    border-radius: 30px;
+  }
+  .description {
+    margin-bottom: 1em;
+  }
+  .description h1 {
+    font-size: 2.5em;
+  }
+  .description h3 {
+    font-size: 1.5em;
+    color: #08204a;
+  }
 }
-.tags-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1em;
-}
-.tags-row.tag-with-description {
-  justify-content: start;
-  align-items: center;
-}
-.tags-row.tag-with-description {
-  width: 100%;
-}
-.tags-row.tag-with-description a {
-  width: 50%;
-  text-decoration: none;
-}
-.tags-row.tag-with-description .description {
-  margin-left: 2em;
-  color: #08204a;
-}
-.tags-row.tag-with-description .description h1 {
-  margin-bottom: 0.3em;
-}
-.tags-row.tag-with-description img {
-  height: 200px;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 30px;
+@media only screen and (min-width: 1360px) {
+  .tag-item {
+    text-align: center;
+    font-family: "silkamedium", sans-serif;
+    font-size: 1.3em;
+    width: 200px;
+  }
+  .tag-item img {
+    height: 200px;
+    border-radius: 30px;
+    cursor: pointer;
+  }
+  .tags-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+  }
+  .tags-row.tag-with-description {
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+  }
+  .tags-row.tag-with-description a {
+    width: 50%;
+    text-decoration: none;
+  }
+  .tags-row.tag-with-description .description {
+    margin-left: 2em;
+    color: #08204a;
+  }
+  .tags-row.tag-with-description .description h1 {
+    margin-bottom: 0.3em;
+  }
+  .tags-row.tag-with-description img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="viewer">
-    <ul class="tags">
+    <ul v-if="!isMobile" class="tags">
       <img
         class="back-icon"
         src="/static/arrow_back.svg"
@@ -16,6 +16,13 @@
     <img :src="imageUrl" :alt="title" />
     <h4>{{ objectID }}</h4>
     <h1>{{ title }}</h1>
+    <ul v-if="isMobile" class="tags">
+      <li v-for="tag in tags" :key="tag">
+        <router-link :to="`/tags/${tag.id}`">
+          {{ tag.name }}
+        </router-link>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -30,6 +37,11 @@ export default {
       tags: null,
       handle: null,
     };
+  },
+  computed: {
+    isMobile() {
+      return window.innerWidth < 1360;
+    },
   },
   created() {
     this.$root.sanityClient
@@ -97,13 +109,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
 
 .viewer {
-  max-width: 80%;
   text-align: center;
-}
-.viewer img {
-  max-width: 100%;
-  max-height: 80%;
-  border-radius: 50px;
 }
 .viewer h4 {
   font-family: "Roboto Mono", monospace;
@@ -113,16 +119,22 @@ export default {
 .viewer h1 {
   color: #08204a;
 }
+
 .tags {
-  display: flex;
-  margin-bottom: 1em;
-  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+
+.tags::-webkit-scrollbar {
+  display: none;
+}
+
 .tags a {
   color: white;
   text-decoration: none;
+  overflow-x: auto;
 }
-
 .tags li {
   font-family: "silkaregular", Tahoma, sans-serif;
   background-color: #505e77;
@@ -131,5 +143,35 @@ export default {
   border-radius: 30px;
   margin-right: 0.5em;
   font-size: 1.3em;
+}
+
+@media only screen and (max-width: 1360px) {
+  .tags {
+    padding: 0.5em 1.5em;
+  }
+
+  .viewer {
+    margin: 0;
+  }
+  .viewer img {
+    max-width: 100%;
+    max-height: 80%;
+  }
+}
+
+@media only screen and (min-width: 1360px) {
+  .viewer {
+    max-width: 80%;
+  }
+  .viewer img {
+    max-width: 100%;
+    max-height: 80%;
+    border-radius: 50px;
+  }
+}
+.tags {
+  display: flex;
+  margin-bottom: 1em;
+  align-items: center;
 }
 </style>

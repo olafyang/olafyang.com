@@ -21,7 +21,7 @@
           <p>Hello, I'm Olaf.</p>
           <p>My photography journey started in 2015 in Tainan.</p>
           <p>
-            I’m trying to document moments worth remembering little by little
+            I'm trying to document moments worth remembering little by little
             across two countries and continents.
           </p>
           <p>Here are some of them to share with you.</p>
@@ -37,7 +37,7 @@
           </a>
         </div>
       </div>
-      <div class="about-photo">
+      <div v-if="!isMobile" class="about-photo">
         <router-link to="/view/P2016-06-19.I1">
           <img
             src="https://cdn.sanity.io/images/c747b643/production/c969e66dcde8363547f881d3508494a41ab4dd9b-2609x1732.jpg?w=1000"
@@ -49,20 +49,44 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    isMobile() {
+      return window.innerWidth < 1360;
+    },
+  },
+};
 </script>
 
 <style scoped>
-.about {
-  display: flex;
-  justify-content: space-between;
-  margin-left: 7em;
-}
-
 .about-nav {
-  margin-left: 7em;
   display: flex;
   align-items: center;
+}
+
+@media only screen and (max-width: 1360px) {
+  .about-nav {
+    margin-left: 3em;
+  }
+  .about {
+    margin-left: 3em;
+  }
+
+  .about-text p {
+    line-height: 1.1em;
+  }
+}
+
+@media only screen and (min-width: 1360px) {
+  .about-nav {
+    margin-left: 7em;
+  }
+
+  .about {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 7em;
+  }
 }
 
 .about-text {

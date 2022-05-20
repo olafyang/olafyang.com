@@ -1,6 +1,6 @@
 <template>
   <metainfo> </metainfo>
-  <h5 v-if="mode" class="mode-indicator">{{ mode }}</h5>
+  <!-- <h5 v-if="mode" class="mode-indicator">{{ mode }}</h5> -->
   <NavBar :navbarStyle="getNavbarStyle"></NavBar>
   <div v-if="getNavbarStyle === 'simple'" class="view-container">
     <router-view />
@@ -69,21 +69,64 @@ body {
 }
 
 #app {
-  display: flex;
   height: 100%;
   width: 100%;
 }
 
 @media only screen and (min-width: 1360px) {
+  #app {
+    display: flex;
+  }
   h1 {
     font-size: 2.5em;
     font-family: "silkabold", sans-serif;
   }
+  .view-container {
+    margin-top: 1em;
+    margin-left: 17%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .sub-nav {
+    display: flex;
+    align-items: center;
+    color: #08204a;
+    margin-bottom: 1em;
+  }
+  .item-viewer {
+    width: 90%;
+  }
+
+  img.back-icon {
+    height: 2.5em;
+    width: 2.5em;
+    margin-right: 1em;
+    cursor: pointer;
+  }
 }
+
 @media only screen and (max-width: 1360px) {
   h1 {
     font-size: 2em;
     font-family: "silkabold", sans-serif;
+  }
+  .sub-nav {
+    margin-bottom: 1em;
+    text-align: center;
+  }
+  .sub-nav img {
+    display: none;
+  }
+
+  .item-viewer p {
+    text-align: center;
+  }
+
+  img.back-icon {
+    height: 2.5em;
+    width: 2.5em;
+    cursor: pointer;
   }
 }
 h2 {
@@ -102,35 +145,16 @@ p {
   font-family: "silkaregular", sans-serif;
 }
 
-.view-container {
-  margin-top: 1em;
-  margin-left: 17%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 .item-viewer {
-  width: 90%;
+  margin: 1em;
 }
 .item-viewer h1 {
   color: #08204a;
 }
 .item-viewer p {
-  margin: 1.5em 0;
-}
-
-.sub-nav {
-  display: flex;
-  align-items: center;
+  margin: 1em 0;
   color: #08204a;
-}
-
-img.back-icon {
-  height: 2.5em;
-  width: 2.5em;
-  margin-right: 1em;
-  cursor: pointer;
+  font-size: 1.3em;
 }
 
 .fullpage-view {
@@ -139,6 +163,7 @@ img.back-icon {
 }
 
 a {
+  color: white;
   text-decoration: none;
 }
 
@@ -146,6 +171,7 @@ a {
   height: 100%;
   width: 100%;
   background-color: #08204a;
+  overflow: hidden;
 }
 .branding-simple {
   padding: 2em 0 1em 2em;
@@ -159,10 +185,6 @@ a {
 .branding-simple hr {
   border-radius: 3px;
   border: 2px white solid;
-}
-
-.sub-nav {
-  margin-bottom: 1em;
 }
 
 .mode-indicator {
