@@ -62,7 +62,7 @@ export default {
           targetRowHeight: 200,
           containerWidth:
             document.querySelector("div.item-viewer").getBoundingClientRect()
-              .width - 11,
+              .width,
           containerPadding: {
             top: 0,
             right: 0,
@@ -70,25 +70,34 @@ export default {
             left: 0,
           },
         });
-      });
+        const handleResize = () => {
+          this.items = getItemsWithLayout(this.items, {
+            targetRowHeight: 200,
+            containerWidth: document
+              .querySelector("div.item-viewer")
+              .getBoundingClientRect().width,
+            containerPadding: {
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+            },
+          });
+        };
 
-    const handleResize = () => {
-      this.items = getItemsWithLayout(this.items, {
-        targetRowHeight: 200,
-        containerWidth: document
-          .querySelector("div.item-viewer")
-          .getBoundingClientRect().width,
-        containerPadding: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-        },
+        handleResizeRef = handleResize;
+        window.addEventListener("resize", handleResize);
+        var observer = new MutationObserver(() => {
+          if (document.querySelector("div.item-viewer")) {
+            handleResize();
+            observer.disconnect();
+          }
+        });
+        observer.observe(document, {
+          childList: true,
+          subtree: true,
+        });
       });
-    };
-
-    handleResizeRef = handleResize;
-    window.addEventListener("resize", handleResize);
   },
   beforeRouteLeave() {
     window.removeEventListener("resize", handleResizeRef);
