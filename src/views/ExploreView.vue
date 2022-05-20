@@ -17,6 +17,8 @@
 import { getItemsWithLayout } from "@/layout";
 import ItemsView from "../components/ItemsView.vue";
 
+let handleResizeRef = null;
+
 export default {
   data() {
     return {
@@ -48,24 +50,39 @@ export default {
             aspectRatio: item.aspectRatio,
           };
         });
-        this.items = getItemsWithLayout(items);
+        this.items = getItemsWithLayout(items, {
+          targetRowHeight: 200,
+          containerWidth:
+            document.querySelector("div.item-viewer").getBoundingClientRect()
+              .width - 11,
+          containerPadding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+          },
+        });
       });
-  },
-  beforeUpdate() {
-    const itemViewRect = document
-      .querySelector("div.item-viewer")
-      .getBoundingClientRect();
-    const options = {
-      targetRowHeight: 200,
-      containerWidth: itemViewRect.width,
-      containerPadding: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-      },
+
+    const handleResize = () => {
+      this.items = getItemsWithLayout(this.items, {
+        targetRowHeight: 200,
+        containerWidth: document
+          .querySelector("div.item-viewer")
+          .getBoundingClientRect().width,
+        containerPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        },
+      });
     };
-    this.items = getItemsWithLayout(this.items, options);
+    handleResizeRef = handleResize;
+    window.addEventListener("resize", handleResize);
+  },
+  beforeRouteLeave() {
+    window.removeEventListener("resize", handleResizeRef);
   },
   components: {
     ItemsView,
