@@ -88,21 +88,86 @@ export default {
   background-color: #0f0f0f;
   position: relative;
 }
-.image-grid {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  transform-origin: center;
-  transform: rotate(25deg) translate(0em, -20em) scale(1.08, 1.08);
+
+@media only screen and (min-width: 1500px) {
+  .image-grid {
+    position: absolute;
+    height: 100%;
+    width: 120%;
+    display: flex;
+    flex-wrap: wrap;
+    transform-origin: center;
+    transform: rotate(25deg) translate(-6rem, -16rem);
+  }
 }
-.image-grid-element {
-  margin-bottom: 1em;
+
+@media only screen and (min-width: 960px) and (max-width: 1500px) {
+  .image-grid {
+    position: absolute;
+    height: 100%;
+    width: 140%;
+    display: flex;
+    flex-wrap: wrap;
+    transform-origin: center;
+    transform: rotate(25deg) translate(-6rem, -16rem);
+  }
 }
-.image-grid-element img {
-  border-radius: 30px;
+
+@media only screen and (min-width: 960px) {
+  .image-grid-element {
+    height: 250px;
+    width: 250px;
+    margin: 0.4em;
+  }
+  .image-grid-element img {
+    height: 250px;
+    width: 250px;
+    border-radius: 30px;
+  }
+}
+
+@media only screen and (max-width: 960px) and (min-width: 500px) {
+  .image-grid {
+    position: absolute;
+    height: 100%;
+    width: 200%;
+    display: flex;
+    flex-wrap: wrap;
+    transform-origin: center;
+    transform: rotate(25deg) translate(-8rem, -5rem);
+  }
+  .image-grid-element {
+    height: 210px;
+    width: 210px;
+    margin: 0.2em;
+  }
+  .image-grid-element img {
+    height: 210px;
+    width: 210px;
+    border-radius: 15px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .image-grid {
+    position: absolute;
+    height: 100%;
+    width: 250%;
+    display: flex;
+    flex-wrap: wrap;
+    transform-origin: center;
+    transform: rotate(25deg) translate(-9rem, 0rem);
+  }
+  .image-grid-element {
+    height: 150px;
+    width: 150px;
+    margin: 0.2em;
+  }
+  .image-grid-element img {
+    height: 150px;
+    width: 150px;
+    border-radius: 15px;
+  }
 }
 
 .ui-bg {
