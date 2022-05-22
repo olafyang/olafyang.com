@@ -37,7 +37,7 @@
           </a>
         </div>
       </div>
-      <div v-if="!isMobile" class="about-photo">
+      <div class="about-photo">
         <router-link to="/view/P2016-06-19.I1">
           <img
             src="https://cdn.sanity.io/images/c747b643/production/c969e66dcde8363547f881d3508494a41ab4dd9b-2609x1732.jpg?w=1000"
@@ -49,13 +49,7 @@
 </template>
 
 <script>
-export default {
-  computed: {
-    isMobile() {
-      return window.innerWidth < 1360;
-    },
-  },
-};
+export default {};
 </script>
 
 <style scoped>
@@ -74,6 +68,10 @@ export default {
 
   .about-text p {
     line-height: 1.1em;
+  }
+
+  .about-photo {
+    display: none;
   }
 }
 

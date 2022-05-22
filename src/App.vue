@@ -168,10 +168,9 @@ a {
 }
 
 .fullpage-color-main {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   background-color: #08204a;
-  overflow: hidden;
 }
 .branding-simple {
   padding: 2em 0 1em 2em;
