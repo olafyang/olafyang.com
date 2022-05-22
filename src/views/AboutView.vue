@@ -30,7 +30,7 @@
         <div class="about-text">
           <h1>Contact</h1>
           <a href="mailto:mail@olafyang.com">
-            <p>- mail@olafyang.com</p>
+            <p>mail@olafyang.com</p>
           </a>
           <a href="https://www.instagram.com/olaf.yang/" target="_blank">
             <p>- Instagram</p>
@@ -64,6 +64,7 @@ export default {};
   }
   .about {
     margin-left: 3em;
+    padding-bottom: 2em;
   }
 
   .about-text p {
