@@ -154,8 +154,7 @@ export default {
     margin: 0;
   }
   .viewer img {
-    max-width: 100%;
-    max-height: 80%;
+    max-height: 50rem;
   }
 }
 
@@ -164,8 +163,7 @@ export default {
     max-width: 80%;
   }
   .viewer img {
-    max-width: 100%;
-    max-height: 80%;
+    max-height: 50rem;
     border-radius: 50px;
   }
 }
