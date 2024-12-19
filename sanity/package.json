@@ -1,0 +1,31 @@
+{
+  "name": "olafyangcom",
+  "private": true,
+  "version": "2.0.0",
+  "description": "",
+  "main": "package.json",
+  "author": "Olaf Yang",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@sanity/eslint-config-studio": "^5.0.0",
+    "@sanity/vision": "^3.68.1",
+    "babel": "^6.23.0",
+    "eslint": "^9.0.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "sanity": "^3.68.1"
+  }
+}
