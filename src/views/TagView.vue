@@ -32,6 +32,11 @@ export default {
       items: null,
     };
   },
+  head() {
+    return {
+      title: "Olaf Yang - " + this.tagName,
+    };
+  },
   created() {
     this.$root.sanityClient
       .fetch(
@@ -60,9 +65,9 @@ export default {
         });
         this.items = getItemsWithLayout(items, {
           targetRowHeight: 200,
-          containerWidth:
-            document.querySelector("div.item-viewer").getBoundingClientRect()
-              .width,
+          containerWidth: document
+            .querySelector("div.item-viewer")
+            .getBoundingClientRect().width,
           containerPadding: {
             top: 0,
             right: 0,

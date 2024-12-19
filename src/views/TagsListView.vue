@@ -48,6 +48,11 @@ export default {
       sections: null,
     };
   },
+  head() {
+    return {
+      title: "Olaf Yang | Photography",
+    };
+  },
   created() {
     const tagWidth = window.innerWidth < 1360 ? 160 : 200;
 

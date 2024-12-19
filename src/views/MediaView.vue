@@ -79,7 +79,7 @@ export default {
         });
       });
   },
-  metaInfo() {
+  head() {
     const title = `Olaf Yang | ${this.title ? this.title : this.objectID}`;
     return {
       title: title,

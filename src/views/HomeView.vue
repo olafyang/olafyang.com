@@ -63,7 +63,7 @@ export default {
         );
       });
   },
-  metaInfo() {
+  head() {
     const title = "Olaf Yang | Photography";
     return {
       title: title,
