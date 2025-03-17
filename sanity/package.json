@@ -16,16 +16,24 @@
   ],
   "dependencies": {
     "@sanity/eslint-config-studio": "^5.0.0",
-    "@sanity/vision": "^3.68.1",
+    "@sanity/vision": "^3.79.0",
     "babel": "^6.23.0",
     "eslint": "^9.0.0",
     "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "styled-components": "^6.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",
-    "sanity": "^3.68.1"
+    "sanity": "^3.79.0"
+  },
+  "overrides": {
+    "sanity": {
+      "esbuild": "^0.25.1"
+    },
+    "@sanity/vision": {
+      "prismjs": "1.30.0"
+    }
   }
 }
