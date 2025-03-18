@@ -11,7 +11,7 @@
         left: item.layout.left + 'px',
       }"
     >
-      <NuxtLink :to="`/view/${item.id}`">
+      <NuxtLink :to="`/view/${toURLSafe(item.id)}`">
         <NuxtImg
           provider="sanity"
           :src="item.imgId"
