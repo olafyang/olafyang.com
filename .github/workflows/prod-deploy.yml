@@ -26,6 +26,8 @@ jobs:
     defaults:
       run:
         working-directory: ./nuxt
+    env:
+      SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -37,14 +39,12 @@ jobs:
           cache: "pnpm"
           cache-dependency-path: "./nuxt"
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm generate
-        env:
-          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy .output/public --site ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          command: pages deploy ./nuxt/.output/public --project-name ${{ secrets.CLOUDFLARE_PROJECT_NAME }}

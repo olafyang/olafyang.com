@@ -20,76 +20,45 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      imgId: undefined as string | undefined,
-      smallUrl: undefined as string | undefined,
-      title: undefined as string | undefined,
-      objectID: undefined as string | undefined,
-      tags: undefined as { name: string; id: string }[] | undefined,
-      handle: undefined as string | undefined,
-    };
-  },
-  created() {
-    const { sanityClient, builder: urlBuilder } = useSanity();
-    sanityClient
-      ?.fetch(
-        `*[_type == "photo" && objectID == "${this.$route.params.id}"][0]
-        {
-            objectID,
-            title,
-            hdlPrefix,
-            "imageUrl": photo.asset->url,
-            "photo": photo.asset,
-            "tags": *[_type == "tag" && _id in ^.tags[]._ref]{name, tagID}
-        }`
-      )
-      .then((res) => {
-        if (res === null) {
-          this.$router.replace("/404");
-          return;
-        }
-        this.imgId = res.photo._ref;
-        this.smallUrl = urlBuilder?.image(res.imageUrl).width(500).url();
-        this.title = res.title;
-        this.objectID = res.objectID;
-        this.handle = `${res.hdlPrefix}/${res.objectID}`;
-        this.tags = res.tags
-          .filter((tag: any) => tag.name && tag.tagID)
-          .map((tag: any) => {
-            return {
-              name: tag.name,
-              id: tag.tagID,
-            };
-          });
-      });
-  },
-  head() {
-    const title = `Olaf Yang | ${this.title ? this.title : this.objectID}`;
-    return {
-      title: title,
-      "twitter:card": "summary",
-      "twitter:domain": "https://olafyang.com",
-      "twitter:url": `https://olafyang.com${this.$route.path}`,
-      "twitter:title": title,
-      "twitter:description": `View "${
-        this.title ? this.title : this.objectID
-      }" on olafyang.com`,
-      "twitter:image": `${this.smallUrl}`,
+<script setup lang="ts">
+const route = useRoute();
+const router = useRouter();
+const { sanityClient, builder: urlBuilder } = useSanity();
 
-      "og:url": `https://olafyang.com${this.$route.path}`,
-      "og:type": "website",
-      "og:title": title,
-      "og:description": `View "${
-        this.title ? this.title : this.objectID
-      }" on olafyang.com`,
-      "og:image": `${this.smallUrl}`,
+const { data, error } = await useAsyncData("photo", () => {
+  return sanityClient?.fetch(
+    `*[_type == "photo" && objectID == "${fromURLSafe(
+      route.params.id as string
+    )}"][0]
+    {
+        objectID,
+        title,
+        hdlPrefix,
+        "imageUrl": photo.asset->url,
+        "photo": photo.asset,
+        "tags": *[_type == "tag" && _id in ^.tags[]._ref]{name, tagID}
+    }`
+  );
+});
+
+if (error.value) {
+  router.replace("/404");
+}
+
+const tags = computed(() =>
+  data.value?.tags.map((tag: any) => {
+    return {
+      name: tag.name,
+      id: tag.tagID,
     };
-  },
-  name: "MediaView",
-};
+  })
+);
+const imgId = computed(() => data.value?.photo._ref);
+const smallUrl = computed(() =>
+  urlBuilder?.image(data.value?.imageUrl).width(500).url()
+);
+const title = computed(() => data.value?.title);
+const objectID = computed(() => data.value?.objectID);
 </script>
 
 <style scoped>
