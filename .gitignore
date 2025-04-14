@@ -1,8 +1,11 @@
 .DS_Store
 node_modules/
 dist/
+**/.astro
+**/.astroCache
 **/.sanity
 **/.secrets
+.envrc
 
 # local env files
 .env.local

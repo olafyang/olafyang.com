@@ -1,0 +1,105 @@
+---
+import type { GetStaticPaths } from "astro";
+
+import BackButton from "../../components/BackButton.astro";
+import useSanity from "../../composables/useSanity";
+import Default from "../../layouts/Default.astro";
+import ItemsView from "../../components/ItemsView.astro";
+
+export const getStaticPaths = (async () => {
+  const { sanityClient } = useSanity();
+  const tags = (await sanityClient.fetch(`
+    *[_type == 'tag']{tagID, name}
+  `)) as { tagID: string; name: string }[];
+  return tags.map((tag) => ({
+    params: {
+      id: tag.tagID,
+    },
+    props: {
+      tagName: tag.name,
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = {
+  tagName: string;
+};
+
+const { sanityClient } = useSanity();
+
+const { id: tagID } = Astro.params;
+const { tagName } = Astro.props;
+
+type Tag = {
+  tagID: string;
+  name: string;
+  description?: string;
+  photos: {
+    objectID: string;
+    url: string;
+    dimensions: {
+      width: number;
+      height: number;
+    };
+    photo: {
+      _ref: string;
+    };
+  }[];
+};
+
+type Res = {
+  tagID: string;
+  name: string;
+  description: string | null;
+  photos: {
+    objectID: string;
+    url: string;
+    dimensions: {
+      width: number;
+      height: number;
+      aspectRatio: number;
+    };
+    photo: {
+      _ref: string;
+    };
+  }[];
+};
+
+const tag = await sanityClient
+  ?.fetch(
+    `*[_type == "tag" && tagID == "${tagID}"][0]
+    {
+    tagID,
+    name,
+    description,
+    "photos": *[_type == "photo" && references(^._id)]{objectID, "url": photo.asset->url, "dimensions": photo.asset->metadata.dimensions, "photo": photo.asset}
+    }`
+  )
+  .then((res: Res) => {
+    if (res === null) {
+      throw new Error("Tag not found");
+    }
+    return {
+      tagID: res.tagID,
+      name: res.name,
+      description: res.description,
+      photos: res.photos.map((photo) => ({
+        id: photo.objectID,
+        url: photo.url,
+        imgId: photo.photo._ref,
+        aspectRatio: photo.dimensions.aspectRatio,
+      })),
+    };
+  });
+---
+
+<Default>
+  <div class="item-viewer">
+    <div class="sub-nav">
+      <BackButton />
+      <h1>{tagName}</h1>
+    </div>
+    <p v-if="description">{tag.description}</p>
+    <ItemsView items={tag.photos} />
+  </div>
+</Default>

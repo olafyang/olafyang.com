@@ -1,0 +1,14 @@
+---
+import Base from "./Base.astro";
+
+import NavBar from "../components/Navbar.astro";
+---
+
+<Base>
+  <div id="app">
+    <NavBar />
+    <div class="view-container">
+      <slot />
+    </div>
+  </div>
+</Base>

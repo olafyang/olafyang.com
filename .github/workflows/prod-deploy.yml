@@ -4,8 +4,8 @@ on:
 
 jobs:
   sanity:
-    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./sanity
@@ -20,13 +20,14 @@ jobs:
         run: npm run deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY_TOKEN }}
-  nuxt:
+  site:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./nuxt
+        working-directory: ./astro
     env:
       SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+      SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -36,14 +37,19 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-          cache-dependency-path: "./nuxt"
+          cache-dependency-path: "./astro"
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
+      - name: Astro build cache
+        uses: actions/cache@v4
+        with:
+          path: ./astro/.astroCache
+          key: ${{ runner.os }}-astro
       - name: Build
-        run: pnpm generate
+        run: pnpm build
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy ./nuxt/.output/public --project-name ${{ secrets.CLOUDFLARE_PROJECT_NAME }} --branch ${{ github.ref_name }} --commit-hash ${{ github.sha }}
+          command: pages deploy ./astro/dist --project-name ${{ secrets.CLOUDFLARE_PROJECT_NAME }} --branch ${{ github.ref_name }} --commit-hash ${{ github.sha }}

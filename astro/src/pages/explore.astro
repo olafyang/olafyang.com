@@ -1,0 +1,52 @@
+---
+import { useSanity } from "../composables/useSanity";
+import ItemsView from "../components/ItemsView.astro";
+import BackButton from "../components/BackButton.astro";
+
+import Default from "../layouts/Default.astro";
+
+const { sanityClient } = useSanity();
+
+const items = await sanityClient
+  ?.fetch(
+    `*[_type == "photo"][0...200]
+      {
+        objectID,
+        "url": photo.asset->url,
+        "aspectRatio": photo.asset->metadata.dimensions.aspectRatio,
+        "photo": photo.asset
+      }`
+  )
+  .then((res: any) => {
+    if (res === null) {
+      return [];
+    }
+    return res.map((item: any) => ({
+      id: item.objectID,
+      imgId: item.photo._ref,
+      aspectRatio: item.aspectRatio,
+      url: item.url,
+    }));
+  });
+---
+
+<style>
+  .item-viewer {
+    margin: 1em;
+  }
+  .sub-nav {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+  }
+</style>
+
+<Default>
+  <div class="item-viewer">
+    <div class="sub-nav">
+      <BackButton />
+      <h1>Explore</h1>
+    </div>
+    <ItemsView items={items} />
+  </div>
+</Default>

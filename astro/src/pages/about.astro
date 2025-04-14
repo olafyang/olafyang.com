@@ -1,0 +1,123 @@
+---
+import BackButton from "../components/BackButton.astro";
+import { useSanity } from "../composables/useSanity";
+import { Image } from "astro:assets";
+
+import FullPage from "../layouts/FullPage.astro";
+import { toURLSafe } from "../utils/objectId";
+
+const { sanityClient } = useSanity();
+
+const imageID = "P2016-06-19.I1";
+
+const image = (await sanityClient.fetch(
+  `*[_type == 'photo' && objectID == '${imageID}'][0]{'url': photo.asset->url}`
+)) as { url: string };
+---
+
+<style>
+  .about-nav {
+    display: flex;
+    align-items: center;
+    padding-top: 1.5rem;
+  }
+
+  @media only screen and (max-width: 1360px) {
+    .about-nav {
+      margin-left: 3em;
+    }
+    .about {
+      margin-left: 3em;
+      padding-bottom: 2em;
+    }
+
+    .about-text p {
+      line-height: 1.1em;
+    }
+
+    .about-photo {
+      display: none;
+    }
+  }
+
+  @media only screen and (min-width: 1360px) {
+    .about-nav {
+      margin-left: 7em;
+    }
+
+    .about {
+      display: flex;
+      justify-content: space-between;
+      margin-left: 7em;
+    }
+  }
+
+  .about-text {
+    margin-top: 2em;
+    color: white;
+  }
+  .about-text h1 {
+    margin-bottom: 0.7em;
+  }
+  .about-text p {
+    margin: 1em 0;
+    font-size: 1.4em;
+    padding-right: 3em;
+    color: white;
+  }
+  .about-text a {
+    text-decoration: none;
+  }
+
+  .about-photo img {
+    width: 80%;
+    margin-top: 2em;
+    border-radius: 15px;
+    margin-right: 7em;
+    object-fit: cover;
+  }
+</style>
+
+<FullPage>
+  <div class="fullpage-color-main">
+    <div class="about-nav">
+      <BackButton />
+      <div class="branding-simple">
+        <a href="/">
+          <h1>Olaf Yang</h1>
+          <hr />
+        </a>
+      </div>
+    </div>
+    <div class="about">
+      <div class="about-content">
+        <div class="about-text">
+          <h1>About</h1>
+          <p>Hello, I'm Olaf.</p>
+          <p>My photography journey started in 2015 in Tainan.</p>
+          <p>
+            I'm trying to document moments worth remembering little by little
+            across two countries and continents.
+          </p>
+          <p>Here are some of them to share with you.</p>
+        </div>
+
+        <div class="about-text">
+          <h1>Contact</h1>
+          <p>mail&#64;olafyang.com</p>
+        </div>
+      </div>
+      <div class="about-photo">
+        <a href={`/view/${toURLSafe(imageID)}`}>
+          <Image
+            src={image.url}
+            width={1000}
+            height={500}
+            alt=""
+            class="aboutImage"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</FullPage>
