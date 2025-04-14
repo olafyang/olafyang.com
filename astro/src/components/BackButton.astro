@@ -15,17 +15,24 @@ import ArrowBack from "../assets/arrow_back.svg";
 </button>
 
 <script>
+  import { navigate } from "astro:transitions/client";
+
   const handleClick = () => {
     if (window.history.length > 2) {
       window.history.back();
     } else {
-      window.location.href = "/";
+      navigate("/");
     }
   };
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const backButton = document.querySelector("button.back-button");
     if (!backButton) return;
     backButton.addEventListener("click", handleClick);
+  });
+  document.addEventListener("astro:page-unload", () => {
+    const backButton = document.querySelector("button.back-button");
+    if (!backButton) return;
+    backButton.removeEventListener("click", handleClick);
   });
 </script>
 
