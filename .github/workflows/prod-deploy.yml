@@ -5,6 +5,7 @@ on:
 jobs:
   sanity:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     defaults:
       run:
         working-directory: ./sanity
@@ -18,7 +19,7 @@ jobs:
       - name: Build and deploy
         run: npm run deploy
         env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY_TOKEN }}
   nuxt:
     runs-on: ubuntu-latest
     defaults:
