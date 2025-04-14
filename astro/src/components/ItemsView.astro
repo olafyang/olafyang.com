@@ -1,0 +1,131 @@
+---
+import { Picture } from "astro:assets";
+import imageUrlBuilder from "@sanity/image-url";
+import { SANITY_PROJECT_ID, SANITY_DATASET } from "astro:env/server";
+
+import { toURLSafe } from "../utils/objectId";
+
+type Item = {
+  id: string;
+  url: string;
+  imgId: string;
+  aspectRatio: number;
+};
+
+type Props = { items: Item[] };
+
+let { items } = Astro.props as Props;
+
+items = items.map((item) => ({
+  ...item,
+  url: imageUrlBuilder({
+    projectId: SANITY_PROJECT_ID,
+    dataset: SANITY_DATASET,
+  })
+    .image(item.imgId)
+    .height(400)
+    .url(),
+}));
+---
+
+<script>
+  import createJustifiedLayout from "justified-layout";
+
+  type Layout = {
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+    aspectRatio: number;
+  };
+
+  const makeLayout = (
+    aspectRatios: number[],
+    containerWidth: number
+  ): Layout[] => {
+    const layout = createJustifiedLayout(aspectRatios, {
+      containerWidth,
+      targetRowHeight: 200,
+    });
+    return layout.boxes.map((box) => ({
+      top: box.top,
+      left: box.left,
+      width: box.width,
+      height: box.height,
+      aspectRatio: box.aspectRatio,
+    }));
+  };
+
+  const applyLayout = (
+    layouts: Layout[],
+    elements: NodeListOf<Element>
+  ): void => {
+    layouts.forEach((layout, index) => {
+      const element = elements[index] as HTMLElement;
+      const imgEl = element.querySelector("picture img") as HTMLImageElement;
+
+      if (element && imgEl) {
+        element.style.top = `${layout.top}px`;
+        element.style.left = `${layout.left}px`;
+        imgEl.style.width = `${layout.width}px`;
+        imgEl.style.height = `${layout.height}px`;
+      }
+    });
+  };
+
+  document.addEventListener("astro:page-load", () => {
+    const items = document.querySelectorAll("#items-view .item");
+    const viewer = document.querySelector("#items-view.viewer");
+    if (!items || !viewer) {
+      return;
+    }
+
+    const aspectRatios = Array.from(items).map((item) =>
+      Number(item.getAttribute("data-aspect-ratio"))
+    );
+    let layout = makeLayout(aspectRatios, viewer.clientWidth);
+    applyLayout(layout, items);
+
+    const resizeHandler = () => {
+      layout = makeLayout(aspectRatios, viewer.clientWidth);
+      applyLayout(layout, items);
+    };
+
+    window.addEventListener("resize", resizeHandler);
+    document.addEventListener("astro:before-swap", () => {
+      window.removeEventListener("resize", resizeHandler);
+    });
+  });
+</script>
+
+<div id="items-view" class="viewer items">
+  {
+    items.map((item) => (
+      <div class="item" data-aspect-ratio={item.aspectRatio}>
+        <a href={`/view/${toURLSafe(item.id)}`}>
+          <Picture
+            src={item.url}
+            alt=""
+            style={{ objectFit: "cover" }}
+            loading="lazy"
+            formats={["avif", "webp"]}
+            decoding="async"
+            inferSize
+          />
+        </a>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .items {
+    position: relative;
+  }
+  .item {
+    position: absolute;
+  }
+  .item img {
+    border-radius: 10px;
+  }
+</style>

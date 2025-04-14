@@ -1,0 +1,27 @@
+---
+import Base from "./Base.astro";
+
+type Props = {
+  fillBg?: boolean;
+};
+
+const { fillBg } = Astro.props as Props;
+---
+
+<Base>
+  <div class={`fullpage ${fillBg ? "fullpage-color-main" : ""}`}>
+    <slot />
+  </div>
+</Base>
+
+<style is:global>
+  .fullpage-color-main {
+    min-height: 100%;
+    width: 100%;
+    background-color: #08204a;
+  }
+  .fullpage {
+    height: 100%;
+    width: 100%;
+  }
+</style>

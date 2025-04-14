@@ -1,0 +1,133 @@
+---
+import type { GetStaticPaths } from "astro";
+import { Picture } from "astro:assets";
+
+import Default from "../../layouts/Default.astro";
+import { useSanity } from "../../composables/useSanity";
+import { toURLSafe, fromURLSafe } from "../../utils/objectId";
+import BackButton from "../../components/BackButton.astro";
+
+export const getStaticPaths = (async () => {
+  const { sanityClient } = useSanity();
+  const ids = (await sanityClient.fetch(
+    `*[_type == "photo"]{
+      objectID
+    }`
+  )) as { objectID: string }[];
+  return ids.map((id) => ({
+    params: {
+      id: toURLSafe(id.objectID),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { sanityClient, builder } = useSanity();
+const { id } = Astro.params;
+
+type Photo = {
+  objectID: string;
+  title: string;
+  url: string;
+  tags: {
+    name: string;
+    tagID: string;
+  }[];
+};
+
+const photo = await sanityClient
+  ?.fetch(
+    `*[_type == "photo" && objectID == $id][0]
+    {
+        objectID,
+        title,
+        "photo": photo.asset,
+        "tags": *[_type == "tag" && _id in ^.tags[]._ref]{name, tagID}
+    }`,
+    { id: fromURLSafe(id) }
+  )
+  .then((res) => {
+    if (res === null) {
+      return null;
+    }
+    return {
+      objectID: res.objectID,
+      title: res.title,
+      url: builder.image(res.photo._ref).width(800).url(),
+      tags: res.tags.map((tag: any) => ({
+        name: tag.name,
+        tagID: tag.tagID,
+      })),
+    } as Photo;
+  });
+---
+
+<style scoped>
+  .viewer {
+    text-align: center;
+  }
+  .viewer h4 {
+    font-family: "Roboto Mono", monospace;
+    margin: 0.5em 0;
+    color: #08204a;
+  }
+  .viewer h1 {
+    color: #08204a;
+  }
+
+  .tags {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 0.5rem;
+    display: flex;
+    margin-bottom: 1em;
+    align-items: center;
+  }
+
+  .tags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tags a {
+    color: white;
+    text-decoration: none;
+    overflow-x: auto;
+  }
+  .tags li {
+    font-family: "silkaregular", Tahoma, sans-serif;
+
+    background-color: #505e77;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    font-size: 1.3rem;
+  }
+
+  .viewer {
+    max-width: 95%;
+    margin: 2rem auto;
+  }
+  .viewer picture img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+  }
+</style>
+
+<Default>
+  <div class="viewer">
+    <ul class="tags">
+      <BackButton />
+      {
+        photo.tags.map((tag) => (
+          <li v-for="tag in tags">
+            <a href={`/tags/${tag.tagID}`}>{tag.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <Picture src={photo.url} inferSize alt="" formats={["avif", "webp"]} />
+    <h4>{photo.objectID}</h4>
+    <h1>{photo.title}</h1>
+  </div>
+</Default>
