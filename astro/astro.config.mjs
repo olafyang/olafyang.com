@@ -2,6 +2,7 @@ import { defineConfig, envField } from "astro/config";
 
 export default defineConfig({
   site: "https://olafyang.com",
+  cacheDir: "./.astroCache",
   build: {
     outDir: "dist",
   },
