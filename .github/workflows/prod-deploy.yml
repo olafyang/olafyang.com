@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./astro/.astroCache
-          key: ${{ runner.os }}-astro-${{ hashFiles('./astro/.astroCache') }}
+          key: ${{ runner.os }}-astro
       - name: Build
         run: pnpm build
       - name: Deploy
