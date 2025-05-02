@@ -30,6 +30,7 @@ jobs:
     env:
       SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
       SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+      SANITY_USE_CDN: false
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
