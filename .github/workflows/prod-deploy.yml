@@ -44,8 +44,8 @@ jobs:
           cache-dependency-path: "./astro/pnpm-lock.yaml"
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-      - name: Astro build cache
-        uses: actions/cache@v4
+      - name: Restore astro build cache
+        uses: actions/cache/restore@v4
         with:
           path: ./astro/.astroCache
           key: ${{ runner.os }}-astro
@@ -57,3 +57,13 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy ./astro/dist --project-name ${{ secrets.CLOUDFLARE_PROJECT_NAME }} --branch ${{ github.ref_name }} --commit-hash ${{ github.sha }}
+      - name: Delete old astro build cache
+        continue-on-error: true
+        run: gh cache delete ${{ runner.os }}-astro
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Save astro build cache
+        uses: actions/cache/save@v4
+        with:
+          path: ./astro/.astroCache
+          key: ${{ runner.os }}-astro
