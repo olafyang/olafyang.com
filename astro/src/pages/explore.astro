@@ -9,7 +9,7 @@ const { sanityClient } = useSanity();
 
 const items = await sanityClient
   ?.fetch(
-    `*[_type == "photo"][0...200]
+    `*[_type == "photo"]
       {
         objectID,
         "url": photo.asset->url,
