@@ -24,6 +24,8 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY_TOKEN }}
   site:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     defaults:
       run:
         working-directory: ./astro
