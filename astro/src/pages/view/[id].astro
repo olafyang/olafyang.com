@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { Picture } from "astro:assets";
+import { Picture, getImage } from "astro:assets";
 
 import Default from "../../layouts/Default.astro";
 import { useSanity } from "../../composables/useSanity";
@@ -45,20 +45,35 @@ const photo = await sanityClient
     }`,
     { id: fromURLSafe(id) }
   )
-  .then((res) => {
+  .then(async (res) => {
     if (res === null) {
       return null;
     }
+    const fullUrl = builder.image(res.photo._ref).width(1200).url();
+    // Generate a smaller image for OpenGraph
+    const ogImage = await getImage({
+      src: fullUrl,
+      width: 600,
+      inferSize: true,
+      format: 'webp',
+    });
+    
     return {
       objectID: res.objectID,
       title: res.title,
-      url: builder.image(res.photo._ref).width(800).url(),
+      url: fullUrl,
+      ogImageUrl: ogImage.src,
       tags: res.tags.map((tag: any) => ({
         name: tag.name,
         tagID: tag.tagID,
       })),
-    } as Photo;
+    } as Photo & { ogImageUrl: string };
   });
+
+// Add OpenGraph metadata
+const ogImage = photo?.ogImageUrl;
+const ogTitle = photo?.title;
+const ogDescription = `Photo ID: ${photo?.objectID}`;
 ---
 
 <style scoped>
@@ -115,6 +130,14 @@ const photo = await sanityClient
 </style>
 
 <Default>
+
+    <meta slot="head" property="og:title" content={ogTitle} />
+    <meta slot="head" property="og:description" content={ogDescription} />
+    <meta slot="head" property="og:image" content={ogImage} />
+    <meta slot="head" property="og:type" content="website" />
+    <meta slot="head" name="twitter:card" content="summary_large_image" />
+    <meta slot="head" name="twitter:image" content={ogImage} />
+
   <div class="viewer">
     <ul class="tags">
       <BackButton />
