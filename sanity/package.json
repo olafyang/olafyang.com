@@ -15,8 +15,8 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/eslint-config-studio": "^5.0.2",
-    "@sanity/vision": "^3.99.0",
+    "@sanity/eslint-config-studio": "^6.0.0",
+    "@sanity/vision": "^4.22.0",
     "babel": "^6.23.0",
     "eslint": "^9.39.5",
     "prop-types": "^15.8.1",
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.29.7",
-    "sanity": "^3.99.0"
+    "sanity": "^4.22.0"
   },
   "overrides": {
     "sanity": {
