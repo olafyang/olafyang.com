@@ -8,15 +8,15 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.7.10",
+    "astro": "^5.18.2",
     "justified-layout": "^4.1.0"
   },
   "devDependencies": {
-    "@sanity/client": "^6.29.0",
-    "@sanity/image-url": "^1.1.0",
+    "@sanity/client": "^6.29.1",
+    "@sanity/image-url": "^1.2.0",
     "@types/justified-layout": "^4.1.4",
-    "@types/node": "^14.14.31",
-    "sharp": "^0.34.1"
+    "@types/node": "^14.18.63",
+    "sharp": "^0.34.5"
   },
   "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
 }

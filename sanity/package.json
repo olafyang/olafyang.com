@@ -15,18 +15,18 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/eslint-config-studio": "^5.0.0",
-    "@sanity/vision": "^3.84.0",
+    "@sanity/eslint-config-studio": "^5.0.2",
+    "@sanity/vision": "^3.99.0",
     "babel": "^6.23.0",
-    "eslint": "^9.0.0",
+    "eslint": "^9.39.5",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "styled-components": "^6.1"
+    "styled-components": "^6.5.3"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.26.0",
-    "sanity": "^3.88.0"
+    "@babel/preset-env": "^7.29.7",
+    "sanity": "^3.99.0"
   },
   "overrides": {
     "sanity": {
